@@ -1,0 +1,1 @@
+Mbed OS project to test communication with multiple USARTS
