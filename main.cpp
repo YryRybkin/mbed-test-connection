@@ -25,34 +25,34 @@ unsigned char connection_channel;
 
 Mutex serialio;
 
-Queue<message_t, 5> recieve_queue;
-MemoryPool<message_t, 5> recieve_memory_pool;
+Queue<message_t, 32> recieve_queue;
+MemoryPool<message_t, 32> recieve_memory_pool;
 
-Queue<string, 5> USB_trancieve_queue;
-MemoryPool<string, 5> USB_trancieve_memory_pool;
+Queue<string, 32> USB_trancieve_queue;
+MemoryPool<string, 32> USB_trancieve_memory_pool;
 
-Queue<string, 5> Bluetooth_trancieve_queue;
-MemoryPool<string, 5> Bluetooth_trancieve_memory_pool;
+Queue<string, 32> Bluetooth_trancieve_queue;
+MemoryPool<string, 32> Bluetooth_trancieve_memory_pool;
 
-Thread command_processor_thread;
+Thread command_processor_thread(osPriorityNormal, 1024);
 
 BufferedSerial Serial_USB(PA_2, PA_3, 115200);
 
 EventFlags usb_usart_flags;
 
-Thread USB_tranciever_thread;
+Thread USB_tranciever_thread(osPriorityNormal, 1024);
 
-Thread USB_reciever_thread;
+Thread USB_reciever_thread(osPriorityNormal, 1024);
 
 BufferedSerial Serial_Bluetooth(PC_10, PC_11, 9600);
 
 EventFlags bluetooth_usart_flags;
 
-Thread Bluetooth_tranciever_thread;
+Thread Bluetooth_tranciever_thread(osPriorityNormal, 1024);
 
-Thread Bluetooth_reciever_thread;
+Thread Bluetooth_reciever_thread(osPriorityNormal, 1024);
 
-void process_to_input32_queue(MemoryPool<message_t, 5> &mpool, Queue<message_t, 5> &queue, char recieve_buffer[UNIVERSAL_MAX_BUFFER_SIZE], string &out_str, string separator, unsigned char source)
+void process_to_input32_queue(MemoryPool<message_t, 32> &mpool, Queue<message_t, 32> &queue, char recieve_buffer[UNIVERSAL_MAX_BUFFER_SIZE], string &out_str, string separator, unsigned char source)
 {
 
     out_str += recieve_buffer;
@@ -82,7 +82,7 @@ void process_to_input32_queue(MemoryPool<message_t, 5> &mpool, Queue<message_t, 
 
 }
 
-void put_onto_string32_queue(MemoryPool<string, 5> &mpool, Queue<string, 5> &queue, string message)
+void put_onto_string32_queue(MemoryPool<string, 32> &mpool, Queue<string, 32> &queue, string message)
 {
 
     string *sender;
